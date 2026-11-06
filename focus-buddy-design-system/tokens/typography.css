@@ -1,0 +1,31 @@
+/* Focus Buddy — type scale
+ * Timer text and the buddy's face always stay dark plum: pastels blur at small sizes.
+ */
+:root {
+  /* Display (Pixelify Sans) */
+  --fb-text-timer-cozy: 64px;   /* cozy timer, weight 700, letter-spacing 2px */
+  --fb-text-timer-mini: 34px;   /* mini timer, weight 700, letter-spacing 1px */
+  --fb-text-h1:         40px;   /* sheet titles */
+  --fb-text-stat:       26px;   /* stat values in big view */
+  --fb-text-h2:         24px;   /* panel headings, buddy name in big view */
+  --fb-text-code:       22px;   /* invite code */
+  --fb-text-name:       20px;   /* buddy name in cozy, primary button label */
+
+  /* Body (Nunito) */
+  --fb-text-body:    15px;  /* tabs */
+  --fb-text-ui:      14px;  /* buttons, chips, card titles */
+  --fb-text-label:   13px;  /* section labels */
+  --fb-text-caption: 12px;  /* meta, hints — minimum size */
+
+  --fb-weight-regular: 500;
+  --fb-weight-bold:    700;
+  --fb-weight-heavy:   800;
+  --fb-weight-display: 600;
+
+  --fb-leading-tight: 1;
+  --fb-leading-snug:  1.2;
+  --fb-leading-body:  1.35;
+
+  --fb-tracking-timer-cozy: 2px;
+  --fb-tracking-timer-mini: 1px;
+}

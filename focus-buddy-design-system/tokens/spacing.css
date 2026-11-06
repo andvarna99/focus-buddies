@@ -1,0 +1,52 @@
+/* Focus Buddy — spacing, radii, borders, sizes */
+:root {
+  /* Spacing scale */
+  --fb-space-1: 2px;
+  --fb-space-2: 4px;
+  --fb-space-3: 6px;
+  --fb-space-4: 8px;
+  --fb-space-5: 10px;
+  --fb-space-6: 12px;
+  --fb-space-7: 14px;
+  --fb-space-8: 16px;
+  --fb-space-9: 18px;
+  --fb-space-10: 24px;
+  --fb-space-11: 28px;
+  --fb-space-12: 40px;
+
+  /* Radii */
+  --fb-radius-xs: 2px;    /* progress blocks */
+  --fb-radius-sm: 8px;    /* swatches, badges */
+  --fb-radius-md: 12px;   /* chips, icon buttons, inputs */
+  --fb-radius-lg: 14px;   /* primary buttons, room frame (cozy) */
+  --fb-radius-xl: 16px;   /* cards */
+  --fb-radius-2xl: 20px;  /* big-view panel */
+  --fb-radius-widget-mini: 22px;
+  --fb-radius-widget-cozy: 24px;
+  --fb-radius-widget-big: 28px;
+  --fb-radius-round: 999px;
+
+  /* Borders — always plum, never black */
+  --fb-border: 2px;          /* controls, cards */
+  --fb-border-heavy: 3px;    /* widget shell, room frame */
+  --fb-press-shadow: 0 3px 0 var(--fb-plum);   /* chunky "pressable" lip */
+  --fb-select-ring: 0 0 0 3px var(--fb-white), 0 0 0 5px var(--fb-plum);
+
+  /* Hit targets */
+  --fb-target: 44px;         /* minimum for every control */
+  --fb-target-primary: 48px;
+
+  /* Widget shells */
+  --fb-widget-mini-w: 340px;  --fb-widget-mini-h: 88px;
+  --fb-widget-cozy-w: 380px;  --fb-widget-cozy-h: 560px;
+  --fb-widget-big-w:  960px;  --fb-widget-big-h:  680px;
+
+  /* Pixel art: native sizes; only scale by whole numbers */
+  --fb-sprite: 32px;          /* buddy, native */
+  --fb-room-w: 160px;         /* room, native */
+  --fb-room-h: 90px;
+  --fb-scale-mini: 2;         /* buddy 64px */
+  --fb-scale-cozy: 2;         /* room 320×180 */
+  --fb-scale-big: 3;          /* room 480×270 */
+  --fb-scale-sheet: 4;        /* buddy 128px */
+}

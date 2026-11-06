@@ -1,0 +1,60 @@
+/* Focus Buddy — color tokens
+ * Rule: soft plum outlines, never black. Every color gets ONE darker shade
+ * and (optionally) ONE lighter highlight. Keep the whole app inside this set.
+ */
+:root {
+  /* ---- Core palette (6) ---- */
+  --fb-strawberry: #F9C6D7;   /* main pink */
+  --fb-lavender:   #CDBDF2;   /* secondary */
+  --fb-mint:       #BDEBD6;   /* fresh accent */
+  --fb-butter:     #FFEFB3;   /* warm accent */
+  --fb-cream:      #FFF8F2;   /* background */
+  --fb-plum:       #6B4E71;   /* outlines + text */
+
+  /* ---- Shades & highlights (one per color) ---- */
+  --fb-strawberry-shade: #E8A3BC; /* dusty rose: inner ears, chin shadow */
+  --fb-blush:            #EE8AAE; /* cheeks, hearts, progress fill */
+  --fb-nose:             #E07FA3; /* nose, open mouth */
+  --fb-lavender-shade:   #A994DE;
+  --fb-lavender-deep:    #9C86CF; /* bow outline, focus ring */
+  --fb-lavender-light:   #E6DCFA;
+  --fb-mint-shade:       #88CFAF;
+  --fb-mint-bright:      #9EDFC2; /* string lights, book cover, hills */
+  --fb-leaf:             #6FBF98; /* strawberry leaves */
+  --fb-butter-shade:     #F0CF78;
+  --fb-butter-bright:    #FFE07A;
+  --fb-plum-deep:        #4E3553; /* text on lavender (contrast), hover */
+  --fb-plum-soft:        #B99BB3; /* drag-grip dots (decorative only) */
+  --fb-white:            #FFFFFF;
+
+  /* ---- Room / world ---- */
+  --fb-wall:        #FDEEF2;
+  --fb-wall-dot:    #F7D3DF;
+  --fb-floor:       #F6DDB5;
+  --fb-floor-line:  #E9C793;
+  --fb-trim:        #E8C9D3;
+  --fb-strawberry-red: #F07A9A;
+  --fb-water:       #BFE3F5;
+  --fb-glass:       #EAF6FF;
+  --fb-star:        #FFD45C;
+  --fb-star-shade:  #E9A93A;
+
+  /* ---- Semantic roles ---- */
+  --fb-color-bg:           var(--fb-cream);
+  --fb-color-surface:      var(--fb-white);
+  --fb-color-text:         var(--fb-plum);
+  --fb-color-text-on-lav:  var(--fb-plum-deep);
+  --fb-color-outline:      var(--fb-plum);
+  --fb-color-primary:      var(--fb-strawberry);   /* main CTA (Start/Pause) */
+  --fb-color-selected:     var(--fb-lavender);     /* pressed chips, toggles */
+  --fb-color-success:      var(--fb-mint);         /* break active, switch on */
+  --fb-color-reward:       var(--fb-butter);       /* treats, highlights */
+  --fb-color-progress:     var(--fb-blush);
+  --fb-color-focus-ring:   var(--fb-lavender-deep);
+
+  /* ---- Coats (fur / shade) ---- */
+  --fb-coat-pink:           #F9C6D7;  --fb-coat-pink-shade:     #E8A3BC;
+  --fb-coat-lavender:       #CDBDF2;  --fb-coat-lavender-shade: #A994DE;
+  --fb-coat-butter:         #FFEFB3;  --fb-coat-butter-shade:   #F0CF78;
+  --fb-coat-mint:           #BDEBD6;  --fb-coat-mint-shade:     #88CFAF;
+}

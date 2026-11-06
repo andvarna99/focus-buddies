@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focus Buddy — cozy widget reference</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="../_ds_bundle.js"></script>
+<style>
+  body { padding: 24px; background: #EFE6EC; }
+  .room { position: relative; }
+  .room > .layer { position: absolute; }
+</style>
+</head>
+<body>
+<!-- Reference implementation of the COZY size using only the design system.
+     Open directly in a browser. The real app should port this structure to its framework. -->
+<div class="fb-widget fb-widget--cozy">
+
+  <div class="fb-titlebar">
+    <svg class="fb-titlebar__grip" width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><g fill="currentColor"><circle cx="3" cy="4" r="1.6"/><circle cx="9" cy="4" r="1.6"/><circle cx="3" cy="10" r="1.6"/><circle cx="9" cy="10" r="1.6"/><circle cx="3" cy="16" r="1.6"/><circle cx="9" cy="16" r="1.6"/></g></svg>
+    <div class="fb-titlebar__id">
+      <span class="fb-titlebar__name" id="name">Mochi</span>
+      <span class="fb-titlebar__status" id="moodText">Focusing with you</span>
+    </div>
+    <span class="fb-treats" aria-label="12 treats"><span id="treatIcon"></span>12</span>
+    <button class="fb-icon-btn" aria-label="Switch to mini size"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M12 4v6M9 7l3 3 3-3"/></svg></button>
+    <button class="fb-icon-btn" aria-label="Open big view"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+    <button class="fb-icon-btn" aria-label="Tuck widget away"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8l6 6 6-6"/><path d="M5 19h14"/></svg></button>
+  </div>
+
+  <div class="fb-room-frame"><div class="room" id="room"></div></div>
+
+  <div class="fb-timer">
+    <div class="fb-timer__digits" id="digits">25<span class="fb-timer__colon">:</span>00</div>
+    <div class="fb-progress" id="progress" role="progressbar" aria-label="Session progress" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="fb-timer__status" id="status">Pick a length and press start</div>
+  </div>
+
+  <div class="fb-chip-group" role="group" aria-label="Session length" id="presets"></div>
+
+  <div style="display:flex; gap:10px">
+    <button class="fb-btn fb-btn--primary" id="toggle">Start</button>
+    <button class="fb-btn fb-btn--square" id="break" aria-label="Take a break" aria-pressed="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/></svg></button>
+    <button class="fb-btn fb-btn--square" id="reset" aria-label="Reset timer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button>
+  </div>
+</div>
+
+<script>
+  var DS = window.FocusBuddyDS;
+  var SCALE = 2;
+  var st = { preset: 25, remaining: 25 * 60, running: false, done: false, onBreak: false };
+  var $ = function (id) { return document.getElementById(id); };
+
+  $('treatIcon').innerHTML = DS.renderTreat(2);
+
+  function renderRoom(mood) {
+    var a = DS.sprites.room.anchors, html = DS.renderRoom({ scale: SCALE, weather: 'sunset' });
+    html += '<div class="layer" style="left:' + a.buddy.x * SCALE + 'px;top:' + a.buddy.y * SCALE + 'px">' +
+      DS.renderKitten({ mood: mood, coat: 'pink', accessory: 'bow', scale: SCALE }) + '</div>';
+    if (mood === 'proud') a.hearts.forEach(function (h, i) {
+      html += '<div class="layer fb-anim-float" style="left:' + h.x * SCALE + 'px;top:' + h.y * SCALE + 'px;animation-delay:' + (i * 0.8) + 's">' + DS.renderHeart(SCALE) + '</div>';
+    });
+    if (mood === 'sleepy') html += '<div class="layer" style="left:' + a.waterGlass.x * SCALE + 'px;top:' + a.waterGlass.y * SCALE + 'px">' + DS.renderWaterGlass(SCALE) + '</div>';
+    $('room').style.width = 160 * SCALE + 'px';
+    $('room').style.height = 90 * SCALE + 'px';
+    $('room').innerHTML = html;
+  }
+
+  var MOOD_TEXT = { idle: 'Ready when you are', focus: 'Focusing with you', alert: 'Almost there!', proud: 'So proud of you', sleepy: 'Stretching…', asleep: 'Napping' };
+  var lastMood = null;
+
+  function render() {
+    var total = st.preset * 60;
+    var mood = DS.moodFor({ onBreak: st.onBreak, done: st.done, running: st.running, remainingSec: st.remaining });
+    if (mood !== lastMood) { renderRoom(mood); lastMood = mood; }
+    $('moodText').textContent = MOOD_TEXT[mood];
+    var t = DS.formatTime(st.remaining).split(':');
+    $('digits').innerHTML = t[0] + '<span class="fb-timer__colon">:</span>' + t[1];
+    var filled = DS.progressBlocks(st.remaining, total), blocks = '';
+    for (var i = 0; i < 12; i++) blocks += '<span class="fb-progress__block"' + (i < filled ? ' data-filled' : '') + '></span>';
+    $('progress').innerHTML = blocks;
+    $('progress').setAttribute('aria-valuenow', Math.round(filled / 12 * 100));
+    $('status').textContent = st.onBreak ? 'Break time: drink some water!' : st.done ? 'Session done · +3 treats' : st.running ? 'Focusing · ' + st.preset + ' min' : (st.remaining < total ? 'Paused' : 'Pick a length and press start');
+    $('toggle').textContent = st.running ? 'Pause' : st.done ? 'Again' : st.remaining < total ? 'Resume' : 'Start';
+    $('break').setAttribute('aria-pressed', String(st.onBreak));
+    if (!$('presets').children.length) {
+      $('presets').innerHTML = DS.timer.presets.concat(['custom']).map(function (p) {
+        var min = p === 'custom' ? DS.timer.customDefault : p;
+        return '<button class="fb-chip" data-min="' + min + '">' + (p === 'custom' ? 'Custom' : p + ' min') + '</button>';
+      }).join('');
+    }
+    Array.prototype.forEach.call($('presets').children, function (b) {
+      b.setAttribute('aria-pressed', String(Number(b.dataset.min) === st.preset));
+    });
+  }
+
+  $('presets').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-min]'); if (!b) return;
+    var m = Number(b.dataset.min);
+    st = { preset: m, remaining: m * 60, running: false, done: false, onBreak: false }; render();
+  });
+  $('toggle').onclick = function () {
+    if (st.done) { st.remaining = st.preset * 60; st.done = false; st.running = true; }
+    else st.running = !st.running;
+    st.onBreak = false; render();
+  };
+  $('break').onclick = function () { st.onBreak = !st.onBreak; st.running = false; render(); };
+  $('reset').onclick = function () { st.remaining = st.preset * 60; st.running = st.done = st.onBreak = false; render(); };
+  setInterval(function () {
+    if (!st.running) return;
+    st.remaining -= 1;
+    if (st.remaining <= 0) { st.remaining = 0; st.running = false; st.done = true; }
+    render();
+  }, 1000);
+  render();
+</script>
+</body>
+</html>

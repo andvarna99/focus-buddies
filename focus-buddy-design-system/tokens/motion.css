@@ -1,0 +1,51 @@
+/* Focus Buddy — motion
+ * Small, slow, gentle. Everything stops under prefers-reduced-motion.
+ */
+:root {
+  --fb-dur-fast: 120ms;   /* press feedback */
+  --fb-dur-base: 200ms;   /* toggles, tab switches */
+  --fb-dur-beat: 1.2s;    /* timer colon heartbeat */
+  --fb-dur-float: 2.4s;   /* hearts / reactions rising */
+  --fb-dur-bob: 3s;       /* guest pet, z z z, alert bubble */
+  --fb-ease: cubic-bezier(.4, 0, .2, 1);
+  --fb-ease-gentle: ease-in-out;
+
+  /* Sprite animation (frame-based, not tweened) */
+  --fb-idle-frames: 4;          /* breathing bob, 2–4 frames */
+  --fb-idle-frame-ms: 250ms;
+  --fb-blink-every: 4s;         /* blink every few seconds, randomize ±1.5s */
+}
+
+@keyframes fb-beat {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
+@keyframes fb-float-up {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-14px); opacity: 0; }
+}
+@keyframes fb-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes fb-hop {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-8px); }
+}
+@keyframes fb-wiggle {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.fb-anim-beat  { animation: fb-beat var(--fb-dur-beat) var(--fb-ease-gentle) infinite; }
+.fb-anim-float { animation: fb-float-up var(--fb-dur-float) var(--fb-ease-gentle) infinite; }
+.fb-anim-bob   { animation: fb-bob var(--fb-dur-bob) var(--fb-ease-gentle) infinite; }
+.fb-anim-hop   { animation: fb-hop 600ms steps(4) 1; }
+.fb-anim-wiggle{ animation: fb-wiggle 300ms steps(2) 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-anim-beat, .fb-anim-float, .fb-anim-bob, .fb-anim-hop, .fb-anim-wiggle { animation: none; }
+}

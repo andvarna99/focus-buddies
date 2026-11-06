@@ -1,0 +1,40 @@
+/* Focus Buddy — base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: transparent; /* the widget window is frameless; the shell paints itself */
+  color: var(--fb-color-text);
+  font-family: var(--fb-font-body);
+  font-size: var(--fb-text-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+
+a { color: var(--fb-plum); }
+a:hover { color: var(--fb-plum-deep); }
+
+:where(button, a, input, [role="switch"], [role="tab"]):focus-visible {
+  outline: 3px solid var(--fb-color-focus-ring);
+  outline-offset: 2px;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+/* Pixel art: never smooth. Apply to <img>, <canvas> and inline <svg> sprites. */
+.fb-pixel {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  shape-rendering: crispEdges;
+  display: block;
+}
+
+.fb-visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
