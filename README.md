@@ -4,7 +4,19 @@ A cute desktop widget where a pastel pixel art kitten keeps you company while yo
 
 Focus Buddies is a small window that stays on top of your work, with a focus timer and a kitten that reacts as your session goes. Later, friends will be able to bring their own pets along for shared study dates.
 
-> **Status:** early development. The look and the solo timer are in progress, and nothing is ready to install yet. Features below may change.
+> **Status:** early development. The solo timer works, and Linux is the first platform with releases. Features below may change.
+
+## Install on Linux
+
+Download a file from the [latest release](https://github.com/andvarna99/focus-buddies/releases/latest):
+
+| Your system | File | How to install |
+| --- | --- | --- |
+| Most Linux systems | `.AppImage` | Run `chmod +x Focus*.AppImage`, then open the file. It may need FUSE. |
+| Ubuntu, Debian, Mint | `.deb` | `sudo apt install ./Focus*.deb` |
+| Fedora | `.rpm` | `sudo dnf install ./Focus*.rpm` |
+
+These builds aren't signed, and they don't update themselves yet.
 
 ## Development
 
@@ -49,11 +61,21 @@ Commit the generated `src-tauri/gen/apple` folder afterward.
 - It stays in front of other windows.
 - A finished session chimes and pays 3 treats, and treats are still there after you restart.
 
-## Download a build
+## Download a test build
 
 Each push to `main` builds Linux, Windows, and macOS installers. Open the latest run on the repo's **Actions** tab and download them under **Artifacts**. They're kept for 14 days and need a GitHub login.
 
 These test builds aren't signed. Windows may show a SmartScreen warning, where you choose **More info**, then **Run anyway**. On macOS, try to open the app, then choose **Open Anyway** under **System Settings > Privacy & Security**.
+
+## Release a new version
+
+1. Update the version in `package.json`, `src-tauri/Cargo.toml`, and `src-tauri/tauri.conf.json`, then commit.
+2. Tag the commit and push the tag:
+   ```bash
+   git tag v0.2.0
+   git push origin v0.2.0
+   ```
+3. GitHub builds the Linux files and creates a draft release. Test the files, then choose **Publish release** on the repo's **Releases** page.
 
 ## Planned features
 
@@ -131,3 +153,9 @@ The app uses pastel pixel art with soft plum outlines instead of black.
 4. Build the solo widget with the timer, breaks, and treats.
 5. Add outfits and room themes.
 6. Add study dates with friends.
+
+## Copyright
+
+Copyright © 2026 Andrea Varnado. All rights reserved.
+
+The app bundles the Pixelify Sans and Nunito fonts under the SIL Open Font License. Their license texts are in `public/licenses/`.
