@@ -1,5 +1,9 @@
 # Focus Buddies
 
+<p align="center">
+  <img src="docs/mochi.png" alt="Mochi, a pink pixel art kitten with a lavender bow" width="256" height="256">
+</p>
+
 A cute desktop widget where a pastel pixel art kitten keeps you company while you focus.
 
 Focus Buddies is a small window that stays on top of your work, with a focus timer and a kitten that reacts as your session goes. Later, friends will be able to bring their own pets along for shared study dates.
