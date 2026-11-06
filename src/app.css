@@ -1,0 +1,101 @@
+/* Loads the design system without its Google Fonts import, because the app bundles its own fonts. */
+@import "@fontsource/pixelify-sans/400.css";
+@import "@fontsource/pixelify-sans/600.css";
+@import "@fontsource/pixelify-sans/700.css";
+@import "@fontsource/nunito/500.css";
+@import "@fontsource/nunito/700.css";
+@import "@fontsource/nunito/800.css";
+@import "../focus-buddy-design-system/tokens/colors.css";
+@import "../focus-buddy-design-system/tokens/typography.css";
+@import "../focus-buddy-design-system/tokens/spacing.css";
+@import "../focus-buddy-design-system/tokens/motion.css";
+@import "../focus-buddy-design-system/tokens/base.css";
+@import "../focus-buddy-design-system/components/components.css";
+
+:root {
+  --fb-font-display: "Pixelify Sans", ui-monospace, monospace;
+  --fb-font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html, body { overflow: hidden; user-select: none; -webkit-user-select: none; }
+input { user-select: text; -webkit-user-select: text; }
+[data-shell="browser"] body { background: var(--fb-wall); padding: 24px; overflow: auto; }
+[data-shell="ios"], [data-shell="ios"] body { background: var(--fb-color-bg); overflow: auto; }
+[data-shell="ios"] [data-desktop-only], [data-shell="ios"] .fb-titlebar__grip { display: none; }
+
+/* ===== Room ===== */
+.room { position: relative; }
+.room__layer { position: absolute; }
+.room__alert {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--fb-butter);
+  border: var(--fb-border) solid var(--fb-color-outline);
+  border-radius: var(--fb-radius-sm);
+  font-family: var(--fb-font-display); font-weight: 700; font-size: 16px; line-height: 1;
+}
+.room__zzz { font-family: var(--fb-font-display); font-weight: 700; font-size: 16px; line-height: 1; }
+.buddy-button { display: block; padding: 0; border: 0; background: transparent; border-radius: var(--fb-radius-md); }
+.buddy-button--tile { align-self: flex-end; }
+
+/* Frame-based, whole-pixel moves only, so the sprite never lands between pixels. */
+@keyframes app-breathe {
+  0%, 49% { transform: translateY(0); }
+  50%, 100% { transform: translateY(1px); }
+}
+.app-breathe { animation: app-breathe 2s steps(1) infinite; }
+@media (prefers-reduced-motion: reduce) { .app-breathe { animation: none; } }
+
+/* ===== Pixel digits ===== */
+.pixel-timer { display: flex; align-items: center; gap: 8px; }
+.pixel-timer > span { display: block; }
+.fb-timer--mini .pixel-timer { gap: 4px; }
+
+/* ===== Cozy ===== */
+.actions { display: flex; gap: var(--fb-space-5); }
+.fb-widget--cozy .fb-titlebar { gap: var(--fb-space-2); }
+.fb-titlebar__status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ===== Mini ===== */
+.mini__body { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mini__label { display: flex; align-items: flex-start; gap: var(--fb-space-3); font-size: var(--fb-text-caption); font-weight: var(--fb-weight-heavy); line-height: 1.15; }
+.mini__dot { width: 8px; height: 8px; flex-shrink: 0; margin-top: 3px; background: var(--fb-blush); }
+.mini__actions { display: flex; gap: var(--fb-space-2); flex-shrink: 0; }
+.fb-widget--mini .fb-btn--mini:active { transform: none; }
+.fb-widget--mini .fb-btn--mini { box-shadow: none; }
+
+/* ===== Big ===== */
+.big__columns { display: flex; gap: var(--fb-space-8); flex-grow: 1; min-height: 0; }
+.big__left { width: 486px; flex-shrink: 0; display: flex; flex-direction: column; gap: var(--fb-space-7); }
+.big__stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--fb-space-5); }
+.big__stats .fb-card { padding: var(--fb-space-5) var(--fb-space-6); }
+.section { display: flex; flex-direction: column; gap: var(--fb-space-4); }
+.wardrobe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--fb-space-4); }
+.swatches { display: flex; gap: var(--fb-space-5); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: var(--fb-space-5); }
+.fb-item { width: 100%; }
+.fb-btn--flat:disabled, .fb-chip:disabled, .fb-switch:disabled, .fb-icon-btn:disabled, .fb-input:disabled { border-style: dashed; }
+.fb-switch__text { display: flex; flex-direction: column; gap: 1px; flex-grow: 1; }
+.fb-switch__title { font-size: var(--fb-text-ui); font-weight: var(--fb-weight-heavy); }
+.bar-column { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: var(--fb-space-1); height: 100%; min-width: 0; }
+.bar-column .fb-bar { flex-shrink: 0; }
+.bar-labels { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--fb-space-4); padding: 0 var(--fb-space-2); text-align: center; }
+.memory { flex-direction: row; align-items: center; gap: var(--fb-space-8); }
+.memory__text { display: flex; flex-direction: column; gap: var(--fb-space-3); flex-grow: 1; min-width: 0; align-items: flex-start; }
+
+/* ===== Small screens, such as a phone ===== */
+@media (max-width: 959px) {
+  .fb-widget--big { width: 100%; height: auto; min-height: 100vh; border-radius: 0; border-width: 0; padding: 14px 16px 24px; }
+  .big__columns { flex-direction: column; }
+  .big__left { width: 100%; align-items: center; }
+  .big__stats, .big__left .section { width: 100%; }
+  .fb-widget--big .fb-room-frame { align-self: center; }
+  .fb-tabs { overflow-x: auto; }
+  .fb-tab { padding: 0 var(--fb-space-6); flex-shrink: 0; }
+  .fb-panel { overflow: visible; }
+}
+[data-shell="ios"] .fb-widget--cozy { width: 100%; height: auto; min-height: 100vh; border: 0; border-radius: 0; }
+[data-shell="ios"] .fb-widget {
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(18px, env(safe-area-inset-bottom));
+}

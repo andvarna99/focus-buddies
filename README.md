@@ -4,7 +4,56 @@ A cute desktop widget where a pastel pixel art kitten keeps you company while yo
 
 Focus Buddies is a small window that stays on top of your work, with a focus timer and a kitten that reacts as your session goes. Later, friends will be able to bring their own pets along for shared study dates.
 
-> **Status:** early planning. There's no code yet, so nothing is ready to install. Everything below describes the planned app and may change.
+> **Status:** early development. The look and the solo timer are in progress, and nothing is ready to install yet. Features below may change.
+
+## Development
+
+The app is built with [Tauri 2](https://tauri.app), which targets Linux, Windows, macOS, and iOS from one codebase. On desktop it's a floating widget. On iOS, which doesn't allow apps to float over others, it's a full-screen app. The look comes from `focus-buddy-design-system/`, which is the source of truth for colors, sizes, and sprites.
+
+```bash
+npm install
+npm run dev        # the interface only, in a browser at http://localhost:1420
+npm test
+npm run tauri dev  # the real desktop widget
+```
+
+The desktop widget needs Node.js 22, Rust, and the [Tauri prerequisites](https://tauri.app/start/prerequisites/) for your system.
+
+### Windows
+
+1. Install [Node.js](https://nodejs.org), [Rust](https://rustup.rs), and the [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) with **Desktop development with C++**. Windows 10 and 11 normally include WebView2 already.
+2. Clone this repo, then run `npm install` and `npm run tauri dev`.
+
+### macOS
+
+1. Install Xcode from the App Store and open it once, then install [Node.js](https://nodejs.org) and [Rust](https://rustup.rs).
+2. Clone this repo, then run `npm install` and `npm run tauri dev`.
+
+### iOS
+
+iOS builds need a Mac with Xcode. Running on a real iPhone or iPad also needs an Apple Developer account.
+
+```bash
+rustup target add aarch64-apple-ios aarch64-apple-ios-sim
+npm run tauri ios init
+npm run tauri ios dev
+```
+
+Commit the generated `src-tauri/gen/apple` folder afterward.
+
+### What to check on each computer
+
+- The widget fits its window in mini, cozy, and big sizes, with no cut-off edges.
+- The corners are see-through.
+- You can drag it by the title bar, or by the widget in mini size.
+- It stays in front of other windows.
+- A finished session chimes and pays 3 treats, and treats are still there after you restart.
+
+## Download a build
+
+Each push to `main` builds Linux, Windows, and macOS installers. Open the latest run on the repo's **Actions** tab and download them under **Artifacts**. They're kept for 14 days and need a GitHub login.
+
+These test builds aren't signed. Windows may show a SmartScreen warning, where you choose **More info**, then **Run anyway**. On macOS, try to open the app, then choose **Open Anyway** under **System Settings > Privacy & Security**.
 
 ## Planned features
 
@@ -78,7 +127,7 @@ The app uses pastel pixel art with soft plum outlines instead of black.
 
 1. Draw the kitten's idle sprite and settle the style.
 2. Design the cozy view and the mini view.
-3. Choose the desktop framework.
+3. Set up the app with Tauri 2.
 4. Build the solo widget with the timer, breaks, and treats.
 5. Add outfits and room themes.
 6. Add study dates with friends.

@@ -1,0 +1,16 @@
+[package]
+name = "focus-buddy"
+version = "0.1.0"
+description = "A cute desktop widget where a pastel pixel art kitten keeps you company while you focus"
+edition = "2021"
+
+[lib]
+name = "focus_buddy_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# macos-private-api lets the widget window have see-through corners on macOS.
+tauri = { version = "2", features = ["macos-private-api"] }
