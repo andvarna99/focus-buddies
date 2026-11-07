@@ -15,7 +15,7 @@ A floating focus-timer widget with a pixel art kitten, built with Tauri 2 and pl
 | Platform | Status |
 | --- | --- |
 | Linux | Runs locally and releases through GitHub. Uses XWayland on Wayland sessions so GNOME honors always-on-top. |
-| Windows | Built by GitHub Actions. Not yet run on a real computer. |
+| Windows | Runs locally and releases through GitHub as an NSIS installer. |
 | macOS | Built by GitHub Actions. Not yet run on a real computer. |
 | iOS | Not built yet. Needs `npm run tauri ios init` on a Mac. |
 

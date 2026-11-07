@@ -8,9 +8,8 @@ permissions:
   contents: write
 
 jobs:
-  linux:
-    # An older Ubuntu keeps the AppImage and .deb compatible with more Linux versions.
-    runs-on: ubuntu-22.04
+  check-version:
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +21,14 @@ jobs:
             echo "Tag $GITHUB_REF_NAME doesn't match app version $version." >&2
             exit 1
           fi
+
+  linux:
+    needs: check-version
+    # An older Ubuntu keeps the AppImage and .deb compatible with more Linux versions.
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Install Linux libraries
         run: |
@@ -45,6 +52,62 @@ jobs:
 
       - run: npm run tauri build
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-linux
+          path: |
+            src-tauri/target/release/bundle/appimage/*.AppImage
+            src-tauri/target/release/bundle/deb/*.deb
+            src-tauri/target/release/bundle/rpm/*.rpm
+          if-no-files-found: error
+          retention-days: 1
+
+  windows:
+    needs: check-version
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - run: npm ci
+
+      - run: npm test
+
+      # Only the NSIS installer is released. The MSI is still built on every push by build.yml.
+      - run: npm run tauri build -- --bundles nsis
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-windows
+          path: src-tauri/target/release/bundle/nsis/*-setup.exe
+          if-no-files-found: error
+          retention-days: 1
+
+  # Runs only after every platform builds, so a release never ships with a platform missing.
+  release:
+    needs: [linux, windows]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: release-files
+          merge-multiple: true
+
       - name: Create a draft release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -53,6 +116,4 @@ jobs:
             --draft \
             --title "Focus Buddy $GITHUB_REF_NAME" \
             --generate-notes \
-            src-tauri/target/release/bundle/appimage/*.AppImage \
-            src-tauri/target/release/bundle/deb/*.deb \
-            src-tauri/target/release/bundle/rpm/*.rpm
+            release-files/*

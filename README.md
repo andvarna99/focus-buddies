@@ -8,7 +8,7 @@ A cute desktop widget where a pastel pixel art kitten keeps you company while yo
 
 Focus Buddies is a small window that stays on top of your work, with a focus timer and a kitten that reacts as your session goes. Later, friends will be able to bring their own pets along for shared study dates.
 
-> **Status:** early development. The solo timer works, and Linux is the first platform with releases. Features below may change.
+> **Status:** early development. The solo timer works, and Linux and Windows have releases. Features below may change.
 
 ## Install on Linux
 
@@ -21,6 +21,12 @@ Download a file from the [latest release](https://github.com/andvarna99/focus-bu
 | Fedora | `.rpm` | `sudo dnf install ./Focus*.rpm` |
 
 These builds aren't signed, and they don't update themselves yet.
+
+## Install on Windows
+
+Download the `-setup.exe` file from the [latest release](https://github.com/andvarna99/focus-buddies/releases/latest) and open it. It works on Windows 10 and 11.
+
+The installer isn't signed, so Windows may show a SmartScreen warning. Choose **More info**, then **Run anyway**. Focus Buddy then appears in the Start menu, and you can uninstall it from **Settings > Apps**. It doesn't update itself yet.
 
 ## Development
 
@@ -79,7 +85,7 @@ These test builds aren't signed. Windows may show a SmartScreen warning, where y
    git tag v0.2.0
    git push origin v0.2.0
    ```
-3. GitHub builds the Linux files and creates a draft release. Test the files, then choose **Publish release** on the repo's **Releases** page.
+3. GitHub builds the Linux and Windows files and creates a draft release once both finish. Test the files, then choose **Publish release** on the repo's **Releases** page.
 
 ## Planned features
 
