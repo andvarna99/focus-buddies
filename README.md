@@ -10,6 +10,26 @@ Focus Buddies is a small window that stays on top of your work, with a focus tim
 
 > **Status:** early development. The solo timer works, and Linux and Windows have releases. Features below may change.
 
+## Screenshots
+
+**Mini:** just your kitten and the timer, for when you're focusing.
+
+<p align="center">
+  <img src="docs/screenshots/mini.png" alt="The mini widget: Mochi in a small tile beside a 25:00 timer, a play button, and a button to switch sizes" width="340">
+</p>
+
+**Cozy:** the default size, with your room, the timer, session lengths, and controls.
+
+<p align="center">
+  <img src="docs/screenshots/cozy.png" alt="The cozy widget: Mochi sitting in a pastel room with a sunset window, a 25:00 timer, session length chips, and a Start button" width="380">
+</p>
+
+**Dressing room:** the big view, where you rename your kitten and pick her coat and accessories.
+
+<p align="center">
+  <img src="docs/screenshots/big.png" alt="The dressing room: Mochi's room and today's stats on the left, and a panel on the right to change her name, coat color, and accessories" width="960">
+</p>
+
 ## Install on Linux
 
 Download a file from the [latest release](https://github.com/andvarna99/focus-buddies/releases/latest):
