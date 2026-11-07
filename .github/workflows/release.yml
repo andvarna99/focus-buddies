@@ -108,12 +108,15 @@ jobs:
           path: release-files
           merge-multiple: true
 
+      # The Linux artifact keeps its appimage, deb, and rpm folders, so files are gathered from every level.
       - name: Create a draft release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          mapfile -d '' files < <(find release-files -type f -print0)
+          printf 'Uploading %s\n' "${files[@]}"
           gh release create "$GITHUB_REF_NAME" \
             --draft \
             --title "Focus Buddy $GITHUB_REF_NAME" \
             --generate-notes \
-            release-files/*
+            "${files[@]}"
